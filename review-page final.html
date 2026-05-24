@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Leave Us a Review ⭐ — Wow Mobile Boutique</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #D4A853;
+    --gold-light: #F2C96E;
+    --dark: #0E0C09;
+    --card: #1A1712;
+    --border: rgba(212,168,83,0.25);
+    --text: #F5EFE0;
+    --muted: #8A7D65;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--dark);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 16px 40px;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 40% at 50% 0%, rgba(212,168,83,0.12) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 30% at 80% 80%, rgba(212,168,83,0.06) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .container {
+    width: 100%;
+    max-width: 480px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .header {
+    text-align: center;
+    margin-bottom: 28px;
+    animation: fadeDown 0.7s ease both;
+  }
+
+  .stars {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    margin-bottom: 14px;
+  }
+
+  .star {
+    font-size: 26px;
+    animation: starPop 0.5s ease both;
+  }
+  .star:nth-child(1) { animation-delay: 0.1s; }
+  .star:nth-child(2) { animation-delay: 0.2s; }
+  .star:nth-child(3) { animation-delay: 0.3s; }
+  .star:nth-child(4) { animation-delay: 0.4s; }
+  .star:nth-child(5) { animation-delay: 0.5s; }
+
+  @keyframes starPop {
+    0% { transform: scale(0) rotate(-20deg); opacity: 0; }
+    70% { transform: scale(1.2) rotate(5deg); }
+    100% { transform: scale(1) rotate(0deg); opacity: 1; }
+  }
+
+  .header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(24px, 6.5vw, 34px);
+    font-weight: 900;
+    color: var(--gold-light);
+    line-height: 1.1;
+    letter-spacing: -0.5px;
+    margin-bottom: 8px;
+  }
+
+  .header p {
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: 300;
+  }
+
+  .review-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 26px 22px;
+    margin-bottom: 14px;
+    position: relative;
+    overflow: hidden;
+    animation: fadeUp 0.6s ease 0.3s both;
+  }
+
+  .review-card::before {
+    content: '"';
+    position: absolute;
+    top: -10px;
+    left: 16px;
+    font-family: 'Playfair Display', serif;
+    font-size: 120px;
+    color: rgba(212,168,83,0.07);
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  .review-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(212,168,83,0.1);
+    border: 1px solid rgba(212,168,83,0.2);
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--gold);
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+
+  .review-text {
+    font-size: 14.5px;
+    line-height: 1.78;
+    color: var(--text);
+    font-weight: 300;
+    position: relative;
+    z-index: 1;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+
+  .review-text.fading {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  .action-row {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-bottom: 14px;
+    animation: fadeUp 0.6s ease 0.45s both;
+  }
+
+  .shuffle-btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 7px 16px;
+    color: var(--gold);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    transition: all 0.2s ease;
+  }
+
+  .shuffle-btn:hover { background: rgba(212,168,83,0.08); border-color: var(--gold); }
+
+  .shuffle-icon { display: inline-block; transition: transform 0.45s ease; }
+  .shuffle-icon.spin { transform: rotate(360deg); }
+
+  .btn-copy {
+    width: 100%;
+    background: linear-gradient(135deg, var(--gold) 0%, #B8882A 100%);
+    color: #0E0C09;
+    border: none;
+    border-radius: 14px;
+    padding: 16px 24px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: all 0.2s ease;
+    margin-bottom: 12px;
+    animation: fadeUp 0.6s ease 0.55s both;
+  }
+
+  .btn-copy:hover { transform: translateY(-1px); box-shadow: 0 8px 30px rgba(212,168,83,0.35); }
+  .btn-copy:active { transform: translateY(0); }
+  .btn-copy.copied { background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%); color: #fff; }
+
+  .divider {
+    text-align: center;
+    font-size: 11px;
+    color: var(--muted);
+    margin: 4px 0 12px;
+    animation: fadeUp 0.6s ease 0.6s both;
+  }
+
+  .btn-google {
+    width: 100%;
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 14px 24px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    animation: fadeUp 0.6s ease 0.65s both;
+  }
+
+  .btn-google:hover { background: rgba(255,255,255,0.04); border-color: rgba(212,168,83,0.4); }
+
+  .toast {
+    position: fixed;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: #1a1a1a;
+    border: 1px solid #2a2a2a;
+    color: #fff;
+    padding: 12px 20px;
+    border-radius: 12px;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    opacity: 0;
+    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    pointer-events: none;
+    white-space: nowrap;
+    z-index: 100;
+  }
+
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header">
+    <div class="stars">
+      <span class="star">⭐</span>
+      <span class="star">⭐</span>
+      <span class="star">⭐</span>
+      <span class="star">⭐</span>
+      <span class="star">⭐</span>
+    </div>
+    <h1>Got a great deal today?</h1>
+    <p>Copy your review below and share it on Google — it means everything to us!</p>
+  </div>
+
+  <div class="review-card">
+    <div class="review-badge">✦ Ready to copy & paste</div>
+    <div class="review-text" id="reviewText"></div>
+  </div>
+
+  <div class="action-row">
+    <button class="shuffle-btn" onclick="nextReview()">
+      <span class="shuffle-icon" id="shuffleIcon">↻</span>
+      Show me a different one
+    </button>
+  </div>
+
+  <button class="btn-copy" id="copyBtn" onclick="copyAndRedirect()">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+    </svg>
+    <span id="copyBtnText">Copy & Open Google Reviews</span>
+  </button>
+
+  <div class="divider">— tap above to copy the review, then paste it —</div>
+
+  <a class="btn-google" href="https://search.google.com/local/writereview?placeid=ChIJfVVIGZzT1IkRFz9TUGqIKOo" target="_blank">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+      <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+      <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+      <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+    </svg>
+    Open Google Reviews directly
+  </a>
+</div>
+
+<div class="toast" id="toast">✅ Copied! Opening Google Reviews…</div>
+
+<script>
+  const GOOGLE_REVIEW_URL = "https://search.google.com/local/writereview?placeid=ChIJfVVIGZzT1IkRFz9TUGqIKOo";
+
+  // 40 unique reviews — every scan picks one randomly, guaranteed different feel each time
+  const reviews = [
+    "Jasbeer at Wow Mobile Boutique got me the best phone plan deal I've ever had. I was paying way too much with my old carrier and had no idea. He switched me to something with more data and better coverage for less money every month. Honestly can't recommend him enough — this place is a hidden gem.",
+
+    "Walked into Wow Mobile Boutique not expecting much and walked out completely blown away. Jasbeer found me a plan that saves me over $30 a month compared to what I was paying before. If you're not going to him for your phone plan, you're wasting money. Simple as that.",
+
+    "Jasbeer is hands down the best in the business when it comes to phone plans. He took one look at what I was paying and immediately knew he could do better — and he did. Wow Mobile Boutique is the only place I'll ever go for phone plans from now on.",
+
+    "Never thought I'd get excited about a phone plan but Jasbeer at Wow Mobile Boutique made it happen. The deal he put together for me was unreal — way more data, same great network, and a lower bill. Wish I had found this place sooner.",
+
+    "Went to Wow Mobile Boutique after a friend's recommendation and Jasbeer completely delivered. He matched my usage pattern perfectly and got me a plan I didn't even know existed. Been saving money every single month since and I've already sent three people his way.",
+
+    "Jasbeer at Wow Mobile Boutique doesn't just sell you a plan — he actually finds you the best one for your situation. He asked the right questions, compared the options, and got me a deal that no big corporate store ever offered me. Five stars without hesitation.",
+
+    "Switching my phone plan through Jasbeer at Wow Mobile Boutique was one of the best financial decisions I've made this year. Lower monthly bill, more data, and the whole process took less than 20 minutes. The level of service here is something you just don't find at big chain stores.",
+
+    "Jasbeer genuinely cares about getting you the best deal, not just making a sale. He saved me a significant amount on my monthly phone plan and explained everything clearly with no confusing fine print. Wow Mobile Boutique has a customer for life.",
+
+    "I've been to every major phone store in the area and none of them came close to the deal Jasbeer put together for me at Wow Mobile Boutique. Better plan, better price, and actual human customer service. This place is on another level.",
+
+    "Came in frustrated after months of overpaying for a mediocre phone plan. Jasbeer at Wow Mobile Boutique fixed everything in one visit. He's knowledgeable, patient, and genuinely looks out for you. Left with a plan that's better in every way and cheaper too.",
+
+    "Jasbeer at Wow Mobile Boutique is the kind of person who makes you feel like a valued customer, not just another transaction. He found me a phone plan deal that I genuinely couldn't believe — more everything for less money. This is where everyone in the city should be getting their phone plans.",
+
+    "Stopped by Wow Mobile Boutique on a whim and it turned out to be one of the best decisions I've made. Jasbeer had me set up with an incredible phone plan deal within minutes. No pressure, no upselling, just pure value. Highly recommend to absolutely everyone.",
+
+    "Jasbeer knows the phone plan market better than anyone I've ever met. He broke down exactly why my old plan was a rip-off and had me switched to something much better the same day. Wow Mobile Boutique is the real deal — trust the process and go see Jasbeer.",
+
+    "The deal Jasbeer got me on my phone plan at Wow Mobile Boutique is something I still tell people about. More data, lower price, and he made the whole switch completely seamless. Customer service this good is rare — this place deserves every five-star review it gets.",
+
+    "Jasbeer at Wow Mobile Boutique saved my family real money by setting us all up on better phone plans. He handles everything with patience and professionalism, and the deals he finds are genuinely unbeatable. Can't thank him enough for taking care of us.",
+
+    "Walked in with high bills and walked out with a solution. Jasbeer at Wow Mobile Boutique is the guy you want handling your phone plan. He's straightforward, knows his stuff, and finds you deals that actually make a difference in your pocket every month.",
+
+    "Jasbeer is the reason I tell everyone to skip the big carriers and come to Wow Mobile Boutique. He got me a plan with better coverage and more data for less than I was paying before. The experience was smooth, fast, and genuinely enjoyable.",
+
+    "Got the best phone plan deal of my life at Wow Mobile Boutique thanks to Jasbeer. He didn't try to oversell me anything — just listened to what I needed and found the perfect match at a price that surprised me. This is what great customer service looks like.",
+
+    "Jasbeer at Wow Mobile Boutique is a lifesaver. I had been on an overpriced plan for two years and he got me out of it and into something way better in one visit. Saving money every month now and kicking myself for not coming in sooner.",
+
+    "If you're overpaying for your phone plan — and you probably are — go see Jasbeer at Wow Mobile Boutique immediately. He found me a deal in minutes that I had spent weeks trying to find on my own. Absolute five-star experience from start to finish.",
+
+    "Jasbeer treated me like family from the moment I walked into Wow Mobile Boutique. He found me a phone plan that fit my budget perfectly and made sure I understood everything before I signed anything. That kind of honest, transparent service is so hard to find these days.",
+
+    "Best phone plan experience I've ever had, full stop. Jasbeer at Wow Mobile Boutique took the time to actually understand my needs and came through with a deal that saved me money without cutting corners on coverage or data. I'm a customer for life.",
+
+    "Jasbeer at Wow Mobile Boutique has a talent for finding deals that you'd never discover on your own. He got me on a plan with unlimited data that cost less than my old limited plan. I don't know how he does it but I'm not complaining.",
+
+    "Came into Wow Mobile Boutique ready to haggle and Jasbeer just gave me a great deal from the start — no back and forth needed. Honest, fast, and genuinely the best phone plan value I've found anywhere. This is my store now.",
+
+    "Jasbeer went through my phone usage and found me a plan I was perfectly suited for at Wow Mobile Boutique. The savings were immediate and the coverage is just as good. It's clear he actually wants what's best for his customers, not just his bottom line.",
+
+    "Three of my coworkers have already switched to Wow Mobile Boutique after hearing about the deal Jasbeer got me. Every single one of them came back happy. That says everything you need to know — he consistently delivers for everyone who walks through that door.",
+
+    "Jasbeer at Wow Mobile Boutique has a way of making phone plans feel simple instead of confusing. He laid out the options clearly, recommended the best one for me, and the price was better than anything I'd seen advertised anywhere else. Couldn't be happier.",
+
+    "Switching phone plans always felt like a headache until I met Jasbeer at Wow Mobile Boutique. He handled everything smoothly, got me a fantastic deal, and I was out the door in no time. This is the easiest five-star review I've ever written.",
+
+    "Jasbeer is the kind of salesperson who gives salespeople a good name. He's honest, helpful, and gets you deals that are actually worth getting excited about. Wow Mobile Boutique is the only place I'd trust for phone plans going forward.",
+
+    "Never realized how much money I was wasting on my old phone plan until Jasbeer at Wow Mobile Boutique showed me the numbers. He sorted me out right away with a much better deal and I've been telling everyone about this place ever since.",
+
+    "Jasbeer at Wow Mobile Boutique found me a phone plan deal so good I actually double-checked it was real. More data, better price, same reliable network — it ticked every single box. The personal service here completely blows the big stores out of the water.",
+
+    "What sets Jasbeer apart at Wow Mobile Boutique is that he genuinely listens before he recommends anything. He understood exactly what I needed and came back with a plan that was perfect for my lifestyle and my budget. Exceptional service all around.",
+
+    "Popped into Wow Mobile Boutique to ask a quick question and ended up getting the best phone plan deal I've ever had. Jasbeer is super knowledgeable and made the whole experience easy and enjoyable. This place is worth going out of your way for.",
+
+    "Jasbeer at Wow Mobile Boutique is the real deal. He found a phone plan for me that other stores told me didn't exist at that price point. The savings add up every month and the service after the sale has been just as good. Highly recommend.",
+
+    "Wow Mobile Boutique is not like any other phone store I've been to, and Jasbeer is the reason why. He focuses entirely on getting you the best value rather than upselling you things you don't need. Got an incredible plan and left feeling genuinely taken care of.",
+
+    "Jasbeer made switching my phone plan the easiest thing I've done all year. He handled everything, got me a deal I'm still amazed by, and was patient and helpful every step of the way. Wow Mobile Boutique has earned a loyal customer.",
+
+    "The deal Jasbeer put together for me at Wow Mobile Boutique proves that you don't have to pay more to get more. Better data, reliable coverage, and a noticeably lower bill every month. Jasbeer is the person to see for phone plans — no question about it.",
+
+    "Jasbeer at Wow Mobile Boutique is exactly who you want in your corner when it comes to phone plans. He found me savings I didn't think were possible and made the whole transition smooth and stress-free. This is what shopping for a phone plan should always feel like.",
+
+    "Been a customer at Wow Mobile Boutique for a while now and Jasbeer always comes through. The deal he got me on my current phone plan is still the best I've found anywhere. If you want real value and real service, this is the place to go.",
+
+    "Jasbeer at Wow Mobile Boutique doesn't just find you a deal — he finds you the right deal. Mine saved me money monthly and gave me better everything. The whole experience was friendly, transparent, and genuinely impressive. Five stars and then some.",
+  ];
+
+  // Track last shown index to avoid immediate repeats
+  let lastIndex = -1;
+
+  function getRandomIndex() {
+    if (reviews.length === 1) return 0;
+    let idx;
+    do { idx = Math.floor(Math.random() * reviews.length); } while (idx === lastIndex);
+    lastIndex = idx;
+    return idx;
+  }
+
+  function showReview(animate = true) {
+    const el = document.getElementById('reviewText');
+    const copyBtn = document.getElementById('copyBtn');
+    const copyBtnText = document.getElementById('copyBtnText');
+
+    copyBtn.classList.remove('copied');
+    copyBtnText.textContent = 'Copy & Open Google Reviews';
+
+    if (animate) {
+      el.classList.add('fading');
+      setTimeout(() => {
+        el.textContent = reviews[lastIndex];
+        el.classList.remove('fading');
+      }, 260);
+    } else {
+      el.textContent = reviews[lastIndex];
+    }
+  }
+
+  function nextReview() {
+    // Spin icon
+    const icon = document.getElementById('shuffleIcon');
+    icon.classList.remove('spin');
+    void icon.offsetWidth; // reflow to restart animation
+    icon.classList.add('spin');
+    setTimeout(() => icon.classList.remove('spin'), 460);
+
+    getRandomIndex();
+    showReview(true);
+  }
+
+  async function copyAndRedirect() {
+    const review = reviews[lastIndex];
+    const copyBtn = document.getElementById('copyBtn');
+    const copyBtnText = document.getElementById('copyBtnText');
+
+    try {
+      await navigator.clipboard.writeText(review);
+    } catch {
+      const ta = document.createElement('textarea');
+      ta.value = review;
+      ta.style.cssText = 'position:fixed;opacity:0;top:0;left:0';
+      document.body.appendChild(ta);
+      ta.focus(); ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+    }
+
+    copyBtn.classList.add('copied');
+    copyBtnText.textContent = '✓ Copied! Opening Google…';
+
+    const toast = document.getElementById('toast');
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 3500);
+
+    setTimeout(() => window.open(GOOGLE_REVIEW_URL, '_blank'), 900);
+  }
+
+  // Init — pick a random review immediately on load
+  getRandomIndex();
+  showReview(false);
+</script>
+</body>
+</html>
